@@ -1,0 +1,37 @@
+<!-- suppliers/supplier_list.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+  <h1>供应商列表</h1>
+  <a href="{% url 'add_supplier' %}" class="btn-custom">添加供应商</a>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>供应商名称</th>
+        <th>联系人</th>
+        <th>电话</th>
+        <th>地址</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for supplier in suppliers %}
+        <tr>
+          <td>{{ supplier.name }}</td>
+          <td>{{ supplier.contact_name }}</td>
+          <td>{{ supplier.phone }}</td>
+          <td>{{ supplier.address }}</td>
+          <td>
+            <button class="Btn-form-adjust" onclick="window.location.href='{% url 'supplier_books' supplier.id  %}'">
+               管理书籍
+               <i class="fas fa-bars svg-form" ></i>
+            </button>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

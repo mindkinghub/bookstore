@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <h1>我的订单</h1>
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+  {% if page_obj.has_other_pages %}
+    <nav>
+      <ul class="pagination">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page=1" aria-label="First">
+              <span aria-hidden="true">&laquo;&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        {% endif %}
+
+        <li class="page-item disabled">
+          <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        </li>
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+              <span aria-hidden="true">&raquo;&raquo;</span>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>订单号</th>
+        <th>订单金额</th>
+        <th>订单状态</th>
+        <th>创建时间</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in page_obj %}
+        <tr>
+          <td>{{ order.order_number }}</td>
+          <td>{{ order.total_amount }}</td>
+          <td>{{ order.get_status_display }}</td>  <!-- 显示订单状态 -->
+          <td>{{ order.order_date|date:"Y-m-d H:i" }}</td>  <!-- 格式化时间 -->
+          <td>
+             <div class="button-form-container ">
+                 <button class="Btn-form-view" onclick="window.location.href='{% url 'order_detail' order_id=order.id  %}'">
+                   查看订单
+                   <i class="fas fa-search-plus svg-form" ></i>
+                 </button>
+
+                <button class="Btn-form-delete" onclick="window.location.href='{%url 'order_delete' order_id=order.id  %}'">
+                  删除
+                   <i class="fas fa-trash svg-form" ></i>
+                </button>
+                <!-- 只有管理员才能看到发货按钮 -->
+                {% if user.is_staff and order.get_status_display == "PENDING" %}
+                 <button class="Btn-form-add" onclick="window.location.href='{% url 'ship_order' order_id=order.id  %}'">
+                  发货
+                  <i class="fas fa-location-arrow svg-form" ></i>
+                {% endif %}
+             </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if not page_obj.has_other_pages %}
+    <p>没有更多订单</p>
+  {% endif %}
+{% endblock %}

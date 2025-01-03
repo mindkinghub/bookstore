@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+    <h1>增加余额</h1>
+
+    {% if messages %}
+        <div class="alert alert-info">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="amount">增加金额</label>
+            <input type="text" class="form-control input" id="amount" name="amount" placeholder="请输入金额" required>
+        </div>
+        <button type="submit" class="btn-custom">增加余额</button>
+    </form>
+{% endblock %}

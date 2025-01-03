@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+<h2>购物车</h2>
+{% if cart_items %}
+    <!-- 显示购物车内容 -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>书籍</th>
+                <th>数量</th>
+                <th>单价</th>
+                <th>总价</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.book.title }}</td>
+                    <td>
+                         <input type="number" name="quantity" value="{{ item.quantity }}" min="1"
+                                class="form-group input" data-book-id="{{ item.book.id }}" id="quantity-{{ item.book.id }}">
+                    </td>
+                    <td>{{ item.book.price }}</td>
+                    <td>{{ item.total_price }}</td>
+                    <td>
+                        <div class="button-form-container">
+                             <button onclick="updateCart('{{ item.book.id }}', 'update')" class="Btn-form-adjust">
+                                更新数量
+                                <i class="fas fa-adjust svg-form"></i>
+                            </button>
+                            <button onclick="updateCart('{{ item.book.id }}', 'remove')" class="Btn-form-delete">
+                                删除
+                                <i class="fas fa-trash svg-form"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>总金额: {{ total_amount }} 元</h3>
+    {% if discounted_total_amount != total_amount %}
+        <h4>折扣后金额: {{ discounted_total_amount }} 元</h4>
+    {% endif %}
+    <div class="button-form-container">
+         <!-- 清空购物车按钮 -->
+        <form method="post" action="{% url 'clear_cart' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn-custom-delete">清空购物车</button>
+        </form>
+
+        <form method="post" action="{% url 'generate_order' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn-custom-return">生成订单</button>
+        </form>
+    </div>
+
+
+{% else %}
+    <!-- 购物车为空时的提示 -->
+    <p>您的购物车是空的。</p>
+    <a href="{% url 'book_list' %}" class="btn-custom-return">浏览书籍</a>
+{% endif %}
+<script>
+    function updateCart(bookId, action) {
+        const quantityInput = document.getElementById(`quantity-${bookId}`);
+        const quantity = quantityInput ? quantityInput.value : null;
+
+        fetch(`/orders/cart/update/${bookId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: JSON.stringify({
+                action: action,
+                quantity: quantity,
+            }),
+        })
+        .then((response) => {
+            if (!response.ok) {
+                return response.json().then((data) => {
+                    throw new Error(data.error || '更新失败');
+                });
+            }
+            return response.json();
+        })
+        .then((data) => {
+            if (data.success) {
+                location.reload(); // 或根据需求局部刷新
+            } else {
+                alert(data.error || '更新失败');
+            }
+        })
+        .catch((error) => {
+            console.error('更新失败:', error);
+            alert('更新失败: ' + error.message);
+        });
+    }
+</script>
+
+{% endblock %}

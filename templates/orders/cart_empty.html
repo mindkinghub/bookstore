@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+    <h2>您的购物车为空</h2>
+    <p>您的购物车目前没有任何商品。请前往书籍列表页面，挑选您喜欢的书籍并加入购物车。</p>
+    <a href="{% url 'book_list' %}" class="btn-custom-return">前往书籍列表</a>
+{% endblock %}

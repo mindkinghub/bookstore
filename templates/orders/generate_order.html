@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>订单详情 - 订单编号: {{ order.order_number }}</h2>
+
+    <!-- 显示客户信息 -->
+    <h3>客户信息</h3>
+    <p><strong>客户姓名:</strong> {{ customer.name }}</p>
+    <p><strong>客户邮箱:</strong> {{ customer.user.email }}</p>
+    <p><strong>客户ID:</strong> {{ customer.id }}</p>  <!-- 显示客户ID -->
+    <p><strong>订货日期:</strong> {{ order.order_date|date:"Y-m-d H:i" }}</p>  <!-- 格式化订货日期 -->
+
+    <h3>订单明细</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>书号</th>  <!-- 显示书号 -->
+                <th>书籍</th>
+                <th>数量</th>
+                <th>单价 (元)</th>
+                <th>总价 (元)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order_details %}
+                <tr>
+                    <td>{{ item.detail.book.isbn }}</td>  <!-- 显示书号 -->
+                    <td>{{ item.detail.book.title }}</td>
+                    <td>{{ item.detail.quantity }}</td>  <!-- 显示订书数量 -->
+                    <td>{{ item.discounted_price|floatformat:2 }}</td>  <!-- 显示折扣后的单价 -->
+                    <td>{{ item.total_price|floatformat:2 }}</td>  <!-- 显示总价 -->
+                </tr>
+        </tbody>
+    </table>
+
+    <h3>订单总金额: ￥{{ order.get_discounted_price|floatformat:2 }} 元</h3>  <!-- 显示折扣后的总金额 -->
+
+    <h3>订单状态</h3>
+    <p><strong>当前状态:</strong> {{ order.status }}</p>
+{% endblock %}

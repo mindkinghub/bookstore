@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+
+<div class="container">
+  <h1 class="my-4">缺书登记</h1>
+
+  <!-- 显示表单 -->
+  <form method="POST">
+    {% csrf_token %}
+
+    <!-- 书籍选择 -->
+    <div class="form-group">
+      <label for="id_book">书籍</label>
+      {{ form.book|add_class:"input" }}
+    </div>
+
+    <!-- 数量 -->
+    <div class="form-group">
+      <label for="id_quantity">数量</label>
+      {{ form.quantity|add_class:"input" }}
+    </div>
+
+    <!-- 客户请求 -->
+    <div class="form-group">
+      <label for="id_customer_request">客户请求</label>
+      {{ form.customer_request|add_class:"input" }}
+    </div>
+
+    <!-- 库存位置 -->
+    <div class="form-group">
+      <label for="id_storage_location">库存位置</label>
+      {{ form.storage_location|add_class:"input" }}
+    </div>
+
+    <!-- 书籍信息字段 (由 AJAX 填充) -->
+    <div class="form-group">
+      <label for="id_book_isbn">书籍 ISBN</label>
+      <input type="text" id="id_book_isbn" class=" input" readonly>
+    </div>
+
+    <div class="form-group">
+      <label for="id_book_title">书籍书名</label>
+      <input type="text" id="id_book_title" class=" input" readonly>
+    </div>
+
+    <div class="form-group">
+      <label for="id_book_author">书籍作者</label>
+      <input type="text" id="id_book_author" class="input" readonly>
+    </div>
+
+    <div class="form-group">
+      <label for="id_book_publisher">书籍出版社</label>
+      <input type="text" id="id_book_publisher" class="input" readonly>
+    </div>
+
+    <!-- 提交按钮 -->
+    <button type="submit" class="btn-custom">提交缺书记录</button>
+    <a href="{% url 'shortage_list' %}" class="btn-custom-return">返回缺书列表</a>
+  </form>
+</div>
+
+<!-- JavaScript 添加自动填充功能 -->
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+    // 获取书籍选择框
+    const bookSelect = document.getElementById('book_select');  // 获取书籍选择框的 ID
+
+    // 获取相关的显示字段
+    const isbnField = document.getElementById('id_book_isbn');  // ISBN 字段
+    const titleField = document.getElementById('id_book_title');  // 书名字段
+    const authorField = document.getElementById('id_book_author');  // 作者字段
+    const publisherField = document.getElementById('id_book_publisher');  // 出版社字段
+
+    // 为书籍选择框添加 change 事件监听器
+    bookSelect.addEventListener('change', function() {
+      const selectedBookId = this.value;  // 获取选中的书籍 ID
+      if (selectedBookId) {
+        // 通过 AJAX 请求获取选中的书籍详细信息
+        fetch(`/purchases/get_book_details/${selectedBookId}/`)
+          .then(response => response.json())
+          .then(data => {
+            // 填充字段
+            isbnField.value = data.isbn || '';
+            titleField.value = data.title || '';
+            authorField.value = data.authors || '';
+            publisherField.value = data.publisher || '';
+          })
+          .catch(error => {
+            console.error('Error fetching book details:', error);
+            // 这里可以处理错误，显示错误信息
+          });
+      } else {
+        // 如果没有选择书籍，则清空字段
+        isbnField.value = '';
+        titleField.value = '';
+        authorField.value = '';
+        publisherField.value = '';
+      }
+    });
+  });
+
+</script>
+
+{% endblock %}

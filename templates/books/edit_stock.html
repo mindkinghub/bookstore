@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}编辑库存{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+
+<h2>编辑库存</h2>
+
+<form method="POST">
+  {% csrf_token %}
+
+  <!-- 书籍选择 -->
+  <div class="form-group">
+    <label for="id_book">书籍</label>
+    {{ form.book|add_class:"input" }}
+  </div>
+
+  <!-- 库存数量 -->
+  <div class="form-group">
+    <label for="id_quantity">数量</label>
+    {{ form.quantity|add_class:"input" }}
+  </div>
+
+  <!-- 操作类型 -->
+  <div class="form-group">
+    <label for="id_operation_type">操作类型</label>
+    {{ form.operation_type|add_class:"input" }}
+  </div>
+
+  <!-- 库存日期 -->
+  <div class="form-group">
+    <label for="id_stock_date">操作日期</label>
+    {{ form.stock_date|add_class:"input" }}
+  </div>
+
+  <!-- 存储位置 -->
+  <div class="form-group">
+    <label for="id_storage_location">库存位置</label>
+    {{ form.storage_location|add_class:"input" }}
+  </div>
+
+  <!-- 提交按钮 -->
+  <button type="submit" class="btn-custom">提交</button>
+</form>
+
+{% endblock %}

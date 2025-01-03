@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+<!-- 引入 Font Awesome CDN -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+  <div class="container mt-4">
+    <h1>客户列表</h1>
+
+    <!-- 添加客户按钮 -->
+    <div class="mb-3">
+      <a href="{% url 'add_customer' %}" class="btn-custom">添加客户</a>
+    </div>
+
+    <!-- 客户列表 -->
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>用户名</th>
+          <th>客户名称</th>
+          <th>邮箱</th>
+          <th>余额</th>
+          <th>信用等级</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customer in customers %}
+          <tr>
+            <td>{{ customer.user.username }}</td>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.user.email }}</td>
+            <td>{{ customer.balance }}</td>
+            <td>{{ customer.credit_level }}</td>
+            <td>
+              <!-- 编辑客户信息链接 -->
+              <div class="button-form-container ">
+                <button class="Btn-form-edit" onclick="window.location.href='{% url 'edit_customer' customer.id %}'">
+                  编辑
+                  <i class="fas fa-edit svg-form"></i>
+                </button>
+                <!-- 增加余额链接 -->
+                <button class="Btn-form-add" onclick="window.location.href='{% url 'add_balance' customer.id  %}'">
+                  增加余额
+                   <i class="fas fa-plus svg-form" ></i>
+                </button>
+                <!-- 调整信用等级链接 -->
+                <button class="Btn-form-adjust" onclick="window.location.href='{% url 'adjust_credit_level' customer.id  %}'">
+                  调整信用等级
+                   <i class="fas fa-adjust svg-form" ></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="6" class="text-center">暂无客户</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <div class="card-text">
+        <h2>订单详情 - 订单编号: {{ order.order_number }}</h2>
+
+        <!-- 显示客户信息 -->
+        <h3>客户信息</h3>
+        <p><strong>客户姓名:</strong> {{ customer.name }}</p>
+        <p><strong>客户邮箱:</strong> {{ customer.user.email }}</p>
+        <p><strong>客户ID:</strong> {{ customer.id }}</p>  <!-- 显示客户ID -->
+        <p><strong>订货日期:</strong> {{ order.order_date|date:"Y-m-d H:i" }}</p>  <!-- 格式化订货日期 -->
+
+        <h3>订单明细</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>书号</th>  <!-- 显示书号 -->
+                    <th>书籍</th>
+                    <th>数量</th>
+                    <th>单价 (元)</th>
+                    <th>总价 (元)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order_details %}
+                    <tr>
+                        <td>{{ item.detail.book.isbn }}</td>  <!-- 显示书号 -->
+                        <td>{{ item.detail.book.title }}</td>
+                        <td>{{ item.detail.quantity }}</td>  <!-- 显示订书数量 -->
+                        <td>{{ item.discounted_price|floatformat:2 }}</td>  <!-- 显示折扣后的单价 -->
+                        <td>{{ item.total_price|floatformat:2 }}</td>  <!-- 显示总价 -->
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">没有订单明细</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>订单总金额: </h3>  <!-- 显示折扣后的总金额 -->
+        <p>￥{{ order.total_amount|floatformat:2 }} 元</p>
+        <h3>订单发货地址:</h3>
+        <p>{{ order.shipping_address }}</p>
+
+        <!-- 如果发货地址存在，显示修改按钮 -->
+        {% if order.shipping_address %}
+            <a href="{% url 'edit_shipping_address' order_id=order.id %}" class=" btn-custom-return">修改地址</a>
+        {% else %}
+            <p>未填写发货地址</p>
+            <a href="{% url 'edit_shipping_address' order_id=order.id %}" class=" btn-custom">填写地址</a>
+        {% endif %}
+
+        <h3>订单状态</h3>
+        <p><strong>当前状态:</strong> {{ order.status }}</p>
+    </div>
+{% endblock %}

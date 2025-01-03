@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+  <div class="container">
+    <h1 class="my-4">生成采购单</h1>
+    <!-- 显示缺书信息 -->
+    <div class="alert alert-info">
+      <h4>缺书信息</h4>
+      <p><strong>书籍：</strong>{{ shortage.book.title }}</p>
+      <p><strong>数量：</strong>{{ shortage.quantity }}</p>
+      <p><strong>供应商：</strong>
+        {% if shortage.supplier %}
+          {{ shortage.supplier.name }}
+        {% else %}
+          未指定供应商
+        {% endif %}
+      </p>
+      <p><strong>库存位置：</strong>
+        {% if shortage.storage_location %}
+          {{ shortage.storage_location.storage_location }}  <!-- 显示库存位置 -->
+        {% else %}
+          未指定库存位置
+        {% endif %}
+      </p>
+      <p><strong>缺书日期：</strong>{{ shortage.shortage_date }}</p>
+    </div>
+
+    <!-- 显示表单验证错误 -->
+    {% if form.errors %}
+      <div class="alert alert-danger">
+        <ul>
+          {% for field in form %}
+            {% for error in field.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <!-- 生成采购单表单 -->
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="{{ form.book.id_for_label }}">书籍</label>
+        {{ form.book|add_class:"input" }}
+        {% if form.book.required %}
+          <span class="text-danger">*</span>  <!-- 标识必填项 -->
+        {% endif %}
+        {% if form.book.errors %}
+          <div class="text-danger">
+            {% for error in form.book.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.quantity.id_for_label }}">数量</label>
+        {{ form.quantity |add_class:"input"}}
+        {% if form.quantity.required %}
+          <span class="text-danger">*</span>  <!-- 标识必填项 -->
+        {% endif %}
+        {% if form.quantity.errors %}
+          <div class="text-danger">
+            {% for error in form.quantity.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.purchase_date.id_for_label }}">采购日期</label>
+        {{ form.purchase_date|add_class:"input" }}
+        {% if form.purchase_date.errors %}
+          <div class="text-danger">
+            {% for error in form.purchase_date.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.supplier.id_for_label }}">供应商</label>
+        {{ form.supplier |add_class:"input"}}
+        {% if form.supplier.required %}
+          <span class="text-danger">*</span>  <!-- 标识必填项 -->
+        {% endif %}
+        {% if form.supplier.errors %}
+          <div class="text-danger">
+            {% for error in form.supplier.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.storage_location.id_for_label }}">库存位置</label>
+        {{ form.storage_location|add_class:"input" }}
+        {% if form.storage_location.required %}
+          <span class="text-danger">*</span>  <!-- 标识必填项 -->
+        {% endif %}
+        {% if form.storage_location.errors %}
+          <div class="text-danger">
+            {% for error in form.storage_location.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.customer_request.id_for_label }}">顾客请求</label>
+        {{ form.customer_request |add_class:"input"}}
+        {% if form.customer_request.required %}
+          <span class="text-danger">*</span>  <!-- 标识必填项 -->
+        {% endif %}
+        {% if form.customer_request.errors %}
+          <div class="text-danger">
+            {% for error in form.customer_request.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <button type="submit" class="btn-custom">提交采购单</button>
+    </form>
+
+    <br>
+    <a href="{% url 'shortage_list' %}" class="btn-custom">返回缺书列表</a>
+  </div>
+{% endblock %}

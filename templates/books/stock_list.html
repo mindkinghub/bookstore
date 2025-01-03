@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}库存管理{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <h2>库存列表</h2>
+  <a href="{% url 'add_stock' %}" class="btn-custom">添加库存</a>
+  <a href="{% url 'reduce_stock' %}" class="btn-custom-delete">减少库存</a>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>书籍</th>
+        <th>数量</th>
+        <th>操作日期</th>
+        <th>最近操作类型</th>
+        <th>库存位置</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for stock in stocks %}
+        <tr>
+          <td>{{ stock.book.title }}</td>
+          <td>{{ stock.quantity }}</td>
+          <td>{{ stock.stock_date }}</td>
+          <td>{{ stock.operation_type }}</td>  <!-- 显示操作类型 -->
+          <td>{{ stock.storage_location }}</td>
+          <td>
+            <button class="Btn-form-edit" onclick="window.location.href='{% url 'edit_stock' stock.pk   %}'">
+               编辑
+               <i class="fas fa-edit svg-form" ></i>
+            </button>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="6" class="text-center">暂无库存记录</td>  <!-- 确保 colspan 为 6 -->
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

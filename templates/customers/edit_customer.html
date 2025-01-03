@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}编辑客户信息{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+  <div class="container mt-4">
+    <h1 class="text-center mb-4">编辑客户信息</h1>
+    <form method="POST">
+      {% csrf_token %}
+
+      <!-- 使用现有样式 -->
+      <div class="form-group">
+        <label for="{{ form.name.id_for_label }}">客户姓名</label>
+        {{ form.name|add_class:"input" }}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.address.id_for_label }}">地址</label>
+        {{ form.address|add_class:"input" }}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.balance.id_for_label }}">余额</label>
+        {{ form.balance|add_class:"input" }}
+      </div>
+
+      <!-- 添加用户相关字段 -->
+      <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">用户名</label>
+        {{ form.username|add_class:"input" }}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.email.id_for_label }}">电子邮件</label>
+        {{ form.email|add_class:"input" }}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.password.id_for_label }}">密码</label>
+        {{ form.password|add_class:"input" }}
+      </div>
+
+      <!-- 提交按钮 -->
+      <button type="submit" class="btn-custom">提交</button>
+      <!-- 返回按钮 -->
+      {% if user.is_staff %}
+      <a href="{% url 'customer_list' %}" class="btn-custom-return">返回客户列表</a>
+      {% endif %}
+    </form>
+
+
+  </div>
+{% endblock %}

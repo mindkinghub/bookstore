@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+  <div class="container mt-4 card-text">
+    <h1>调整客户信用等级</h1>
+    <p><strong>客户:</strong> {{ customer.name }}</p>
+    <p><strong>当前信用等级:</strong> {{ customer.credit_level.level }} - {{ customer.credit_level.description }}</p>
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="credit_level">选择新的信用等级</label>
+        <select name="credit_level" class="form-control input" required>
+          {% for level in credit_levels %}
+            <option value="{{ level.id }}" {% if customer.credit_level.id == level.id %} selected {% endif %}>
+              {{ level.level }} - {{ level.description }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <button type="submit" class="btn-custom">提交</button>
+      <a href="{% url 'customer_list' %}" class="btn-custom-return">返回客户列表</a>
+    </form>
+
+  </div>
+{% endblock %}

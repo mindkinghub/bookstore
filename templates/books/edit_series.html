@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}编辑丛书{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+<h2>编辑丛书</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <!-- 使用 form-control 和 input 类保持表单字段一致样式 -->
+    <div class="form-group">
+        <label for="{{ form.series_name.id_for_label }}">丛书名称</label>
+        {{ form.series_name|add_class:"input form-control" }}
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.series_code.id_for_label }}">丛书编码</label>
+        {{ form.series_code|add_class:"input form-control" }}
+    </div>
+
+    <!-- 提交按钮 -->
+    <button type="submit" class="btn-custom">保存更改</button>
+    <!-- 返回按钮 -->
+    <a href="{% url 'series_list' %}" class="btn-custom-return">返回丛书列表</a>
+</form>
+{% endblock %}

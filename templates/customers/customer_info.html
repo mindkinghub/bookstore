@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
+    <div class="container card">
+        <h1>客户信息</h1>
+        {% if customer %}
+            <p><strong>用户名：</strong> {{ customer.user.username }}</p>
+            <p><strong>邮箱：</strong> {{ customer.user.email }}</p>
+            <p><strong>客户名称：</strong> {{ customer.name }}</p>
+            <p><strong>客户地址：</strong> {{ customer.address }}</p>
+            <p><strong>余额：</strong> {{ customer.balance }}</p>
+            <p><strong>信用等级：</strong> {{ customer.credit_level.level }}</p>
+            <p><strong>最后购买日期：</strong> {{ customer.last_purchase_date }}</p>
+            <p><strong>累计购买金额：</strong> {{ customer.total_purchase_amount }}</p>
+            <div class="button-form-container">
+                <a href="{% url 'edit_customer' customer.id %}" class="btn-custom-return">编辑信息</a>
+                <a href="{% url 'add_balance' customer.id %}" class=" btn-custom">增加余额</a>
+            </div>
+        {% else %}
+            <p>您还没有关联客户信息。</p>
+            <a href="{% url 'add_customer' %}" class="btn-custom">添加客户信息</a>
+        {% endif %}
+    </div>
+{% endblock %}

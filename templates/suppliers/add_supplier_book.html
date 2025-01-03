@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+
+<h1>为 {{ supplier.name }} 添加书籍</h1>
+
+<form method="post">
+  {% csrf_token %}
+
+  <!-- 选择供应商 -->
+  <div class="form-group">
+    <label for="id_supplier">选择供应商</label>
+    {{ form.supplier |add_class:"input"}}
+  </div>
+
+  <!-- 选择书籍 -->
+  <div class="form-group">
+    <label for="id_book">选择书籍</label>
+    {{ form.book |add_class:"input" }}
+  </div>
+
+  <!-- 价格 -->
+  <div class="form-group">
+    <label for="id_price">价格</label>
+    {{ form.price |add_class:"input"}}
+  </div>
+
+  <!-- 数量 -->
+  <div class="form-group">
+    <label for="id_quantity">数量</label>
+    {{ form.quantity |add_class:"input"}}
+  </div>
+
+  <button type="submit" class="btn-custom">保存</button>
+</form>
+
+{% endblock %}

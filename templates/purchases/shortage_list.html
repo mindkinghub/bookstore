@@ -1,0 +1,49 @@
+<!-- templates/purchases/shortage_list.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <div class="container">
+    <h1 class="my-4">缺书记录列表</h1>
+    <!-- 新增缺书记录按钮 -->
+    <a href="{% url 'shortage_register' %}" class="btn-custom">新增缺书记录</a>
+    <!-- 缺书记录表格 -->
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>书籍</th>
+          <th>数量</th>
+          <th>缺书日期</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for shortage in shortages %}
+          <tr>
+            <td>{{ shortage.book.title }}</td>
+            <td>{{ shortage.quantity }}</td>
+            <td>{{ shortage.shortage_date }}</td>
+            <td>
+              <div class="button-form-container">
+                <button class="Btn-form-add" onclick="window.location.href='{% url 'generate_purchase' shortage.id  %}'">
+                   生成采购单
+                   <i class="fas fa-add svg-form" ></i>
+                </button>
+                <button class="Btn-form-delete" onclick="window.location.href='{% url 'shortage_delete' shortage.id  %}'">
+                   删除
+                   <i class="fas fa-trash svg-form" ></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5" class="text-center">没有缺书记录</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+{% endblock %}

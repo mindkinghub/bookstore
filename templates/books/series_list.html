@@ -1,0 +1,43 @@
+<!-- templates/books/series_list.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}丛书管理{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <h2>丛书列表</h2>
+  <a href="{% url 'add_series' %}" class="btn-custom">添加丛书</a>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>丛书名称</th>
+        <th>丛书编号</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for series in series %}
+        <tr>
+          <td>{{ series.series_name }}</td>
+          <td>{{ series.series_code }}</td>
+          <td>
+            <div class="button-form-container">
+              <button class="Btn-form-view" onclick="window.location.href='{%  url 'view_books_in_series' series.pk  %}'">
+                 查看书籍
+                 <i class="fas fa-bars svg-form" ></i>
+              </button>
+              <button class="Btn-form-edit" onclick="window.location.href='{% url 'edit_series' series.pk   %}'">
+                 编辑
+                 <i class="fas fa-edit svg-form" ></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="3" class="text-center">暂无丛书记录</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

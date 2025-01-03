@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}搜索结果 - 书店管理系统{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3>搜索结果</h3>
+    <p>查询: {{ query }}</p>
+    <!-- 搜索框 -->
+    <form class="search mt-4" action="{% url 'search_results' %}" method="get">
+        <div class="search-container">
+                <!-- 搜索类别选择 -->
+            <div class="form-group">
+                <label for="search_type">搜索类别</label>
+                <select name="search_type" class="form-control" id="search_type" onchange="this.form.submit()">
+                    <option value="books" {% if search_type == 'books' %}selected{% endif %}>书籍</option>
+                    <option value="customers" {% if search_type == 'customers' %}selected{% endif %}>客户</option>
+                </select>
+            </div>
+
+            <!-- 根据搜索类别显示不同的搜索字段选择 -->
+            <div class="form-group">
+                <label for="search_field">搜索字段</label>
+                <select name="search_field" class="form-control" id="search_field">
+                    {% if search_type == 'books' %}
+                        <option value="title" {% if search_field == 'title' %}selected{% endif %}>书名</option>
+                        <option value="isbn" {% if search_field == 'isbn' %}selected{% endif %}>书号</option>
+                        <option value="authors" {% if search_field == 'authors' %}selected{% endif %}>作者</option>
+                        <option value="publisher" {% if search_field == 'publisher' %}selected{% endif %}>出版社</option>
+                        <option value="keywords" {% if search_field == 'keywords' %}selected{% endif %}>关键字</option>
+                    {% elif search_type == 'customers' %}
+                        <option value="name" {% if search_field == 'name' %}selected{% endif %}>名称</option>
+                    {% endif %}
+                </select>
+            </div>
+             <!-- 搜索框 -->
+             <div class="group">
+               <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+               <input placeholder="Search" type="search" class="input" name="q" autocomplete="off">
+             </div>
+        </div>
+    </form>
+
+    {% if page_obj %}
+        <!-- 搜索结果展示 -->
+        <div class="row mt-4">
+            {% if search_type == 'books' %}
+                {% for book in page_obj %}
+                    <div class="col-md-3 mb-4">
+                      <div class="card h-100">
+                        {% if book.cover_image %}
+                          <img src="{{ book.cover_image.url }}" class="card-img-top" alt="{{ book.title }}" style="width: 100%; height: 360px; object-fit: cover;">
+                        {% else %}
+                          <img src="{% static 'img/default_cover.jpg' %}" class="card-img-top" alt="默认封面" style="width: 100%; height: 360px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                          <h5 class="card-title">{{ book.title }}</h5>
+                          <p class="card-text">{{ book.authors }}</p>
+                          <p class="card-text">￥{{ book.price }}</p>
+                          <a href="{% url 'book_detail' book.pk %}" class="btn btn-primary mt-auto">查看详情</a>
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
+            {% elif search_type == 'customers' %}
+                {% for customer in page_obj %}
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ customer.name }}</h5>
+                                <p class="card-text">账户余额: ￥{{ customer.balance }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% else %}
+        <p>没有找到符合 "{{ query }}" 的信息。</p>
+    {% endif %}
+</div>
+{% endblock %}

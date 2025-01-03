@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+  <h1>修改订单 #{{ order.order_number }} 的发货地址</h1>
+
+  <h3>当前发货地址</h3>
+  {% if order.shipping_address %}
+    <p>{{ order.shipping_address }}</p>
+  {% else %}
+    <p>未填写发货地址。</p>
+  {% endif %}
+
+  <h3>修改发货地址</h3>
+  <form method="POST">
+    {% csrf_token %}
+    <label for="shipping_address">新的发货地址：</label>
+    <input type="text" name="shipping_address" id="shipping_address" value="{{ order.shipping_address }}" class="input" required>
+    <button type="submit" class=" btn-custom-return">更新地址</button>
+  </form>
+
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

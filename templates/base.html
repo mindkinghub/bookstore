@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh">
+  {% load static %} <!-- 加载静态文件标签库 -->
+  {% load widget_tweaks %}
+  <head>
+    <!-- 必须的meta标签 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>{% block title %}书店管理系统{% endblock %}</title>
+
+    <!-- 引入Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- 分页样式 -->
+    <style>
+        .pagination {
+            margin-top: 20px;
+        }
+        .pagination .step-links a {
+            margin-right: 10px;
+        }
+        /* 让页脚始终在页面底部 */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex-grow: 1; /* 主内容区域占据剩余空间 */
+        }
+
+        footer {
+            margin-top: auto; /* 吸附到底部 */
+        }
+    </style>
+
+<!--    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">-->
+    <!-- 引入FontAwesome图标 -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<!--    <script src="{% static 'js/script.js' %}"></script>-->
+    <!-- 引入自定义CSS -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
+    {% block head_extra %} {% endblock %} <!-- 额外的head内容，可在子模板中扩展 -->
+  </head>
+
+  <body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="{% url 'home' %}">书店管理系统</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="{% url 'book_list' %}">书籍</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'order_list' %}">订单</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'supplier_list' %}">供应商</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'shortage_list' %}">采购</a></li>
+          <!-- 如果是管理员，显示后台管理选项 -->
+          {% if user.is_authenticated and user.is_staff %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'customer_list' %}">管理客户</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'stock_list' %}">管理库存</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'series_list' %}">管理丛书</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">进入后台管理</a></li>
+
+          {% endif %}
+        </ul>
+
+        <!-- 用户登录状态 -->
+        <div class="ml-auto d-flex justify-content-end">
+          <div class="btn-group dropright">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {% if user.is_authenticated %}
+                {{ user.username }}
+              {% else %}
+                <i class="fas fa-user"></i> 登录/注册
+              {% endif %}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+              {% if user.is_authenticated %}
+                <a class="dropdown-item" href="{% url 'logout' %}">退出登录</a>
+              {% else %}
+                <a class="dropdown-item" href="{% url 'login' %}">登录</a>
+                <a class="dropdown-item" href="{% url 'register' %}">注册</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+
+  <div class="button-container">
+    <button class="button" onclick="window.location.href='{% url 'home' %}'">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1024 1024" stroke-width="0" fill="currentColor" stroke="currentColor" class="icon">
+        <path d="M946.5 505L560.1 118.8l-25.9-25.9a31.5 31.5 0 0 0-44.4 0L77.5 505a63.9 63.9 0 0 0-18.8 46c.4 35.2 29.7 63.3 64.9 63.3h42.5V940h691.8V614.3h43.4c17.1 0 33.2-6.7 45.3-18.8a63.6 63.6 0 0 0 18.7-45.3c0-17-6.7-33.1-18.8-45.2zM568 868H456V664h112v204zm217.9-325.7V868H632V640c0-22.1-17.9-40-40-40H432c-22.1 0-40 17.9-40 40v228H238.1V542.3h-96l370-369.7 23.1 23.1L882 542.3h-96.1z"></path>
+      </svg>
+    </button>
+    <button class="button" onclick="window.location.href='{% url 'customer_info' %}'">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="0" fill="currentColor" stroke="currentColor" class="icon">
+        <path d="M12 2.5a5.5 5.5 0 0 1 3.096 10.047 9.005 9.005 0 0 1 5.9 8.181.75.75 0 1 1-1.499.044 7.5 7.5 0 0 0-14.993 0 .75.75 0 0 1-1.5-.045 9.005 9.005 0 0 1 5.9-8.18A5.5 5.5 0 0 1 12 2.5ZM8 8a4 4 0 1 0 8 0 4 4 0 0 0-8 0Z"></path>
+      </svg>
+    </button>
+    <button class="button" onclick="window.location.href='{% url 'cart_view' %}'">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" stroke-linejoin="round" stroke-linecap="round" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon">
+        <circle r="1" cy="21" cx="9"></circle>
+        <circle r="1" cy="21" cx="20"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+    </button>
+  </div>
+
+    <!-- 主体内容 -->
+    <main class="container mt-4">
+      {% block content %} {% endblock %}
+    </main>
+
+    <!-- 分页 -->
+    {% block pagination %}
+    {% if page_obj.paginator.num_pages > 1 %}
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <!-- 上一页按钮 -->
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="{{ current_url }}?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if search_type %}&search_type={{ search_type }}{% endif %}{% if search_field %}&search_field={{ search_field }}{% endif %}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <span class="page-link" aria-hidden="true">&laquo;</span>
+        </li>
+        {% endif %}
+
+        <!-- 显示当前页码 -->
+        <li class="page-item disabled">
+          <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}页 </span>
+        </li>
+
+        <!-- 下一页按钮 -->
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="{{ current_url }}?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if search_type %}&search_type={{ search_type }}{% endif %}{% if search_field %}&search_field={{ search_field }}{% endif %}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <span class="page-link" aria-hidden="true">&raquo;</span>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+    {% endblock %}
+
+
+    {% if messages %}
+      <div class="alert alert-info mt-3">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+      <p>&copy; 2024 书店管理系统. 版权所有.</p>
+    </footer>
+
+    <!-- 引入必需的JavaScript文件 -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    {% block script_extra %}
+    <script>
+      // 自定义JavaScript代码，例如动态菜单，表单验证等
+      console.log('Page loaded!');
+    </script>
+    {% endblock %}
+
+  </body>
+
+</html>

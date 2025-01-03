@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <h1>{{ supplier.name }} 的供应书籍</h1>
+  <a href="{% url 'add_supplier_book' supplier.id %}" class="btn-custom">添加书籍</a>
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th>书名</th>
+        <th>价格</th>
+        <th>可供应数量</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for supplier_book in books %}
+        <tr>
+          <td>{{ supplier_book.book.title }}</td>
+          <td>{{ supplier_book.price }}</td>
+          <td>{{ supplier_book.quantity }}</td>
+          <td>
+            <div class="button-form-container">
+              <button class="Btn-form-edit" onclick="window.location.href='{% url 'edit_supplier_book' supplier.id supplier_book.id  %}'">
+               编辑
+               <i class="fas fa-edit svg-form" ></i>
+            </button>
+              <button class="Btn-form-delete" onclick="window.location.href='{% url 'delete_supplier_book' supplier.id supplier_book.id  %}'">
+               删除
+               <i class="fas fa-trash svg-form" ></i>
+            </button>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

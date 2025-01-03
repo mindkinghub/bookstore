@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <h2>发货 - 订单编号: {{ order.order_number }}</h2>
+
+    <h3>客户信息</h3>
+    <p><strong>客户姓名:</strong> {{ order.customer.name }}</p>
+    <p><strong>客户邮箱:</strong> {{ order.customer.user.email }}</p>
+    <p><strong>订单总金额:</strong> ￥{{ order.total_amount|floatformat:2 }} 元</p>
+    <p><strong>订单状态:</strong> {{ order.status }}</p>
+
+    <h3>订单明细</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>书籍</th>
+                <th>数量</th>
+                <th>折扣后单价 (元)</th>
+                <th>总价 (元)</th>
+                <th>库存 (本)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order_details %}
+                <tr>
+                    <td>{{ item.detail.book.title }}</td>  <!-- 书籍名称 -->
+                    <td>{{ item.detail.quantity }}</td>  <!-- 订单数量 -->
+                    <td>{{ item.discounted_price|floatformat:2 }}</td>  <!-- 显示折扣后的单价 -->
+                    <td>{{ item.total_price|floatformat:2 }}</td>  <!-- 显示总价 -->
+                    <td>{{ item.detail.book.stocks.first.quantity }}</td>  <!-- 获取最新的库存数量 -->
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">没有订单明细</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>发货信息</h3>
+    <p><strong>当前发货地址:</strong> {{ order.shipping_address }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <h4>确认发货</h4>
+        <p>根据订单明细，发货数量和库存将自动计算。请确保所有商品库存充足。</p>
+
+        <button  type="submit" class="Btn-form-add">
+           提交发货
+           <i class="fas fa-ambulance svg-form" ></i>
+        </button>
+    </form>
+
+    {% if messages %}
+        <div class="alert alert-warning mt-3">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}选择用户添加为客户{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+ <h1 class="text-center mb-4">选择用户添加为客户</h1>
+  <form method="POST" >
+    {% csrf_token %}
+
+    <!-- 用户选择下拉框 -->
+    <div class="form-group">
+      <label for="user_id" class="form-label">选择用户</label>
+      <select name="user_id" class="form-control input" required>
+        {% for user in users %}
+          <option value="{{ user.id }}">{{ user.username }} ({{ user.email }})</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- 提交按钮 -->
+    <button type="submit" class="btn-custom mt-3">添加为客户</button>
+
+    <!-- 显示提示消息 -->
+    {% if message %}
+      <div class="alert alert-warning mt-3">
+        {{ message }}
+      </div>
+    {% endif %}
+  </form>
+{% endblock %}

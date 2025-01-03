@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}编辑供应商 - 书店管理系统{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+
+<h1>编辑供应商: {{ supplier.name }}</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <!-- 供应商名称 -->
+    <div class="form-group">
+        <label for="id_name">供应商名称</label>
+        {{ form.name | add_class:"input" }}
+    </div>
+
+    <!-- 联系人 -->
+    <div class="form-group">
+        <label for="id_contact_name">联系人</label>
+        {{ form.contact_name | add_class:"input" }}
+    </div>
+
+    <!-- 电话 -->
+    <div class="form-group">
+        <label for="id_phone">电话</label>
+        {{ form.phone | add_class:"input" }}
+    </div>
+
+    <!-- 地址 -->
+    <div class="form-group">
+        <label for="id_address">地址</label>
+        {{ form.address | add_class:"input" }}
+    </div>
+
+    <button type="submit" class="btn btn-custom">保存更改</button>
+
+    <!-- 返回供应商列表按钮 -->
+    <a href="{% url 'supplier_list' %}" class="btn btn-custom-return">返回供应商列表</a>
+</form>
+
+{% endblock %}
