@@ -1,0 +1,18 @@
+@charset "UTF-8";
+.login-module__root___ms9rf {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../img/background-water.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center
+}
+
+@media (max-width: 768px) {
+    .login-module__root___ms9rf {
+        background-size: contain
+    }
+}

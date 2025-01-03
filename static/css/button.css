@@ -1,0 +1,236 @@
+.btn-custom {
+  padding: 1.3em 3em;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  display: inline-block; /* 让它像按钮一样显示 */
+  text-decoration: none; /* 去掉链接的下划线 */
+  text-align: center; /* 确保文字居中 */
+}
+
+.btn-custom:hover {
+  background-color: #23c483;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+.btn-custom:active {
+  transform: translateY(-1px);
+}
+
+.btn-custom-delete {
+  padding: 1.3em 3em;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  display: inline-block; /* 让它像按钮一样显示 */
+  text-decoration: none; /* 去掉链接的下划线 */
+  text-align: center; /* 确保文字居中 */
+}
+
+.btn-custom-delete:hover {
+  background-color: #f64f59;
+  box-shadow: 0px 15px 20px #b92b27;
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+.btn-custom-delete:active {
+  transform: translateY(-1px);
+}
+
+
+.btn-custom-return {
+  padding: 1.3em 3em;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  display: inline-block; /* 让它像按钮一样显示 */
+  text-decoration: none; /* 去掉链接的下划线 */
+  text-align: center; /* 确保文字居中 */
+}
+
+.btn-custom-return:hover {
+  background-color: #26a0ff;
+  box-shadow: 0px 15px 20px #26a0da;
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+.btn-custom-return:active {
+  transform: translateY(-1px);
+}
+
+
+.Btn-form-edit {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 120px;
+  height: 50px;
+  border: none;
+  padding: 8px 12px;
+  background-color: rgb(168, 38, 255);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px rgb(140, 32, 212);
+  transition-duration: .3s;
+}
+
+.Btn-form-add {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 130px;
+  height: 50px;
+  border: none;
+  padding: 8px 12px;
+  background-color: #23d183;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px #23c950;
+  transition-duration: .3s;
+}
+
+.Btn-form-delete {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100px;
+  height: 50px;
+  border: none;
+  padding: 8px 12px;
+  background-color: #f64f59;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px #b92b27;
+  transition-duration: .3s;
+}
+
+.Btn-form-view {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 120px;
+  height: 50px;
+  border: none;
+  padding: 8px 12px;
+  background-color: #FFE000;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px #FFF000;
+  transition-duration: .3s;
+}
+
+.Btn-form-adjust {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 150px;
+  height: 50px;
+  border: none;
+  padding: 8px 12px;
+  background-color: #26a0ff;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px #26a0da;
+  transition-duration: .3s;
+}
+
+
+
+.svg-form {
+  width: 13px;
+  position: absolute;
+  right: 0;
+  margin-right: 20px;
+  fill: white;
+  transition-duration: .3s;
+}
+
+.Btn-form-edit:hover,
+.Btn-form-add:hover,
+.Btn-form-delete:hover,
+.Btn-form-view:hover,
+.Btn-form-adjust:hover {
+  color: transparent;
+}
+
+/* 悬停效果 */
+.Btn-form-edit:hover .svg-form,
+.Btn-form-add:hover .svg-form,
+.Btn-form-delete:hover .svg-form,
+.Btn-form-view:hover .svg-form,
+.Btn-form-adjust:hover .svg-form {
+  right: 43%; /* 控制图标的位置 */
+  margin: 0;
+  padding: 0;
+  border: none;
+  transition-duration: .3s;
+}
+
+/* 按钮激活效果 */
+.Btn-form-edit:active,
+.Btn-form-add:active,
+.Btn-form-delete:active,
+.Btn-form-view:active,
+.Btn-form-adjust:active {
+  transform: translate(3px, 3px);
+  transition-duration: .3s;
+  box-shadow: 2px 2px 0px rgb(140, 32, 212);
+}
+
+.button-form-container {
+    display: flex; /* 使用 Flexbox 布局 */
+    gap: 10px; /* 按钮之间的间隔 */
+    justify-content: flex-start; /* 水平排列按钮 */
+}

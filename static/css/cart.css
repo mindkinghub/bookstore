@@ -1,0 +1,251 @@
+/* 加入购物车 */
+.cartBtn {
+  width: 155px;
+  height: 50px;
+  border: none;
+  border-radius: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: white;
+  font-weight: 500;
+  position: relative;
+  background-color: rgb(29, 29, 29);
+  box-shadow: 0 20px 30px -7px rgba(27, 27, 27, 0.219);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.cart {
+  z-index: 2;
+}
+
+.cartBtn:active {
+  transform: scale(0.96);
+}
+
+.product {
+  position: absolute;
+  width: 12px;
+  border-radius: 3px;
+  content: "";
+  left: 23px;
+  bottom: 23px;
+  opacity: 0;
+  z-index: 1;
+  fill: rgb(211, 211, 211);
+}
+
+.cartBtn:hover .product {
+  animation: slide-in-top 1.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-top {
+  0% {
+    transform: translateY(-30px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0) rotate(-90deg);
+    opacity: 1;
+  }
+}
+
+.cartBtn:hover .cart {
+  animation: slide-in-left 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* 隐藏数字输入框的上下箭头 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+    appearance: textfield; /* 其他浏览器 */
+}
+
+/* 输入数量 */
+.number-control {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.number-left::before,
+.number-right::after {
+  content: attr(data-content);
+  background-color: #333333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  width: 30px;
+  height: 40px;
+  color: white;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.number-left::before {
+  content: "-";
+}
+
+.number-right::after {
+  content: "+";
+}
+
+.number-quantity {
+  padding: 0.25rem;
+  border: 0;
+  width: 50px;
+  -moz-appearance: textfield;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.number-left:hover::before,
+.number-right:hover::after {
+  background-color: #666666;
+}
+
+
+.download-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  z-index: 1;
+  background-color: transparent;
+  min-height: 50px; /* 确保按钮高度固定 */
+  padding: 0;
+}
+
+.download {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 90%;
+  margin: 0 auto;
+  z-index: -1;
+  border-radius: 4px;
+  transform: translateY(0%);
+  background-color: #01e056;
+  border: solid 1px #01e0572d;
+  transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.download-button .pdf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 10px;
+  border-radius: 4px;
+  z-index: 1;
+  background-color: #242a35;
+  border: solid 1px #e8e8e82d;
+  transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.download-button:hover {
+  box-shadow:
+    rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px,
+    rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px,
+    rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.download-button:hover .download {
+  transform: translateY(100%);
+}
+
+.download svg polyline,
+.download svg line {
+  animation: pdf 1s infinite;
+}
+
+@keyframes pdf {
+  0% {
+    transform: translateY(0%);
+  }
+
+  50% {
+    transform: translateY(-15%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.pdf-link {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.container-flex {
+    display: flex; /* 使用 Flexbox 布局 */
+    align-items: center; /* 垂直方向居中对齐 */
+    gap: 40px; /* 子元素之间的间距 */
+}
+
+.cover-card {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 500px;
+    height: 700px; /* 固定高度 */
+    border-radius: 40px;
+    overflow: hidden;
+    background: #e0e0e0;
+    box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #ffffff;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.cover-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 可选：悬停时添加动画效果 */
+/*.cover:hover {*/
+/*    transform: scale(1.05); !* 鼠标悬停时稍微放大 *!*/
+/*    box-shadow: 25px 25px 40px #bebebe, -25px -25px 40px #ffffff; !* 增强阴影效果 *!*/
+/*}*/
+
+
+.content {
+    display: flex;
+    flex-direction: column; /* 子元素垂直排列 */
+    gap: 40px; /* 子元素之间的间距 */
+    align-items: center;
+}

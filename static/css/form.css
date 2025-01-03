@@ -1,0 +1,110 @@
+    /* 样式应用到所有输入框，包括文件输入框 */
+    .input {
+        line-height: 28px;
+        border: 2px solid transparent;
+        border-bottom-color: #777;
+        padding: .2rem 0;
+        outline: none;
+        background-color: transparent;
+        color: #0d0c22;
+        transition: .3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        display: inline-block;
+        width: 100%;
+    }
+
+    .input:focus, .input:hover {
+        outline: none;
+        padding: .2rem 1rem;
+        border-radius: 1rem;
+        border-color: #7a9cc6;
+    }
+
+    .input::placeholder {
+        color: #777;
+    }
+
+    .input:focus::placeholder {
+        opacity: 0;
+        transition: opacity .3s;
+    }
+
+    /* 自定义文件选择框样式 */
+    .file-input {
+        display: inline-block;  /* 确保文件选择框和label对齐 */
+        width: 100%;  /* 让输入框占满宽度 */
+        height: 24px;
+        opacity: 0;  /* 隐藏默认文件选择框 */
+        position: absolute; /* 覆盖在 label 上 */
+        z-index: 1; /* 确保文件选择框在 label 上 */
+    }
+
+    /* 自定义标签样式 */
+    .file-label {
+        display: inline-block;
+        width: 100%;
+        padding: .5rem;
+        font-size: 16px;
+        color: #0d0c22;
+        cursor: pointer;
+        border-radius: 1rem;
+        border: 2px solid #777;
+        text-align: center;
+        line-height: 24px;
+        transition: all .3s;
+        box-sizing: border-box;  /* 防止 padding 导致布局错乱 */
+    }
+
+    /* 文件选择框悬停或选中文件时的样式 */
+    .file-label:hover {
+        background-color: #f7f7f7;
+    }
+
+    /* 文件选择框有效状态样式 */
+    input[type="file"]:valid + .file-label {
+        background-color: #e7f3f7;
+        color: #2e6da4;
+    }
+
+
+        /* 覆盖 .form-group 样式，去掉默认的限制 */
+    .form-group {
+        margin-bottom: 1.5rem;  /* 可以根据需要调整间距 */
+        width: 100%;  /* 让 .form-group 占满父容器 */
+    }
+
+    /* 如果需要进一步控制，覆盖所有 form-group 中的输入框 */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100% !important;  /* 确保输入框的宽度覆盖父级容器的限制 */
+        border-radius: 0.25rem;  /* 根据需要调整 */
+    }
+
+    /* 自定义按钮样式 */
+    .btn-custom {
+        padding: 1.3em 3em;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 2.5px;
+        font-weight: 500;
+        color: #000;
+        background-color: #fff;
+        border: none;
+        border-radius: 45px;
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease 0s;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .btn-custom:hover {
+        background-color: #23c483;
+        box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+        color: #fff;
+        transform: translateY(-7px);
+    }
+
+    .btn-custom:active {
+        transform: translateY(-1px);
+    }
+

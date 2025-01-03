@@ -1,0 +1,48 @@
+/* 按钮容器 */
+.button-container {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(245, 73, 144, 0.9);
+  width: 60px;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px, rgba(245, 73, 144, 0.5) 5px 10px 15px;
+  position: fixed; /* 固定定位 */
+  top: 50%; /* 垂直居中 */
+  right: 20px; /* 距离右侧 20px */
+  transform: translateY(-50%);
+}
+
+/* 按钮样式 */
+.button {
+  outline: 0 !important;
+  border: 0 !important;
+  width: 40px; /* 按钮的宽度 */
+  height: 40px; /* 按钮的高度 */
+  border-radius: 50%; /* 圆形按钮 */
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: all ease-in-out 0.3s;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+/* 按钮悬停效果 */
+.button:hover {
+  transform: translateY(-3px);
+}
+
+/* 图标的样式 */
+.icon {
+  font-size: 20px; /* 设置图标的大小 */
+  width: 20px; /* 明确设置图标的宽度 */
+  height: 20px; /* 明确设置图标的高度 */
+  display: inline-block; /* 确保图标正确显示 */
+  fill: currentColor;
+}
+

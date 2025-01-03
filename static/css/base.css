@@ -1,0 +1,111 @@
+/* 修复下拉菜单溢出问题，确保它在父容器内 */
+.dropdown-menu {
+  position: absolute !important;
+  top: 100% !important;  /* 确保菜单显示在头像下方 */
+  left: 0 !important;  /* 禁用右对齐，菜单从左侧开始显示 */
+  z-index: 1050;  /* 确保下拉菜单显示在最上层 */
+  width: auto !important;  /* 让菜单宽度根据内容自动适应 */
+  max-width: 250px;   /* 设置最大宽度，防止过宽 */
+  min-width: 150px;  /* 设置最小宽度，避免过窄 */
+  padding: 10px 0;  /* 去除默认的padding，避免空白 */
+  box-sizing: border-box;  /* 确保计算菜单宽度时包括内边距和边框 */
+}
+
+/* 使用 `dropdown-menu-right` 来控制菜单右对齐 */
+.dropdown-menu-right {
+  right: 0 !important;
+  left: auto !important;
+}
+
+/* 使得下拉菜单的高度足够显示所有菜单项 */
+.dropdown-item {
+  padding: 1px 10px;  /* 增加内边距，确保文字不被压缩 */
+}
+
+/* 响应式设计：小屏幕下，设置菜单宽度为100% */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    width: 100% !important;  /* 确保菜单宽度占满屏幕 */
+    max-width: 100% !important;  /* 防止菜单超出屏幕宽度 */
+    left: 0 !important;  /* 确保菜单从屏幕左边开始显示 */
+    right: auto !important;  /* 禁用右对齐 */
+  }
+}
+
+/* 极小屏幕下（如手机），调整菜单的样式 */
+@media (max-width: 576px) {
+  .dropdown-menu {
+    width: 100% !important;  /* 确保菜单宽度占满屏幕 */
+    max-width: 100% !important;  /* 防止菜单超出屏幕宽度 */
+  }
+}
+
+/* 对应 Bootstrap 4 的按钮样式，调整按钮大小 */
+.btn-group .dropdown-toggle {
+  padding-right: 10px;  /* 添加右侧填充，避免文字过于靠近按钮右侧 */
+}
+
+/* 输入框外部容器 */
+.group {
+  display: flex; /* 使用 flexbox 布局 */
+  line-height: 28px;
+  align-items: center; /* 垂直居中 */
+  position: relative; /* 用于图标定位 */
+  max-width: 320px; /* 限制最大宽度 */
+  width: 100%; /* 使其响应式适应 */
+}
+
+/* 搜索框样式 */
+.input {
+  width: 100%; /* 使输入框占满父容器宽度 */
+  height: 60px; /* 输入框高度 */
+  padding: 0 1rem; /* 左右内边距 */
+  padding-left: 2.5rem; /* 给图标留出空间 */
+  border: 2px solid transparent; /* 初始边框透明 */
+  border-radius: 8px; /* 圆角边框 */
+  outline: none; /* 去除聚焦时的轮廓 */
+  background-color: #f3f3f4; /* 背景色 */
+  color: #0d0c22; /* 字体颜色 */
+  transition: .3s ease; /* 平滑过渡效果 */
+}
+
+/* 占位符文字颜色 */
+.input::placeholder {
+  color: #9e9ea7; /* 占位符文字颜色 */
+}
+
+/* 输入框聚焦或悬停时的样式 */
+.input:focus, .input:hover {
+  outline: none;
+  border-color: rgba(234,76,137,0.4); /* 边框颜色 */
+  background-color: #fff; /* 背景色 */
+  box-shadow: 0 0 0 4px rgb(234 76 137 / 10%); /* 轻微的阴影效果 */
+}
+
+/* 图标样式 */
+.icon {
+  position: absolute; /* 绝对定位图标 */
+  left: 1rem; /* 左侧距离输入框的内边距 */
+  fill: #9e9ea7; /* 图标的填充颜色 */
+  width: 1rem; /* 图标的宽度 */
+  height: 1rem; /* 图标的高度 */
+}
+
+.form-group {
+  width: 80px; /* 设置合适的宽度 */
+  margin: 0 auto; /* 居中 */
+}
+
+#search_type {
+  width: 100%; /* 让 select 元素占满父容器 */
+}
+
+/* 搜索容器 */
+.search-container {
+    display: flex; /* 使用 Flexbox 布局 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    padding: 20px; /* 给容器添加内边距 */
+    max-width: 540px; /* 设置容器最大宽度 */
+    margin: 0 auto; /* 使容器居中 */
+}

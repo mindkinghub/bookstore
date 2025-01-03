@@ -1,0 +1,62 @@
+/* 定义页面的全局颜色变量 */
+:root {
+    --navbar-background-color: rgba(245, 73, 144, 0.9) !important; /* 导航栏背景色 */
+    --footer-background-color: #E684AE !important; /* 页脚背景色 */
+    --white: #ffffff; /* 白色 */
+}
+
+/* 导航栏背景 */
+.navbar {
+    background-color: var(--navbar-background-color) !important;
+}
+
+/* 导航栏文本颜色 */
+.navbar .navbar-brand,
+.navbar .nav-link {
+    color: var(--white) !important;
+}
+
+footer {
+    background-color: var(--footer-background-color) !important; /* 使用全局变量设置背景色 */
+    color: var(--white) !important; /* 设置字体颜色为白色 */
+    display: flex; /* 使用 Flexbox 来控制布局 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    height: 80px; /* 增大高度，确保内容有足够空间 */
+    padding: 0; /* 去除默认的内边距 */
+}
+
+/* 页脚内部的 container 和 row 可能需要应用背景色 */
+footer .container-footer, footer .row-footer {
+    width: 100%; /* 确保 container 填充整个页脚 */
+    padding: 0; /* 移除可能的内边距 */
+    margin: 0; /* 移除可能的外边距 */
+    display: flex; /* 使用 flex 使内容居中 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+}
+
+/* 为页脚的 p 元素单独设置字体颜色 */
+footer p {
+    color: var(--white) !important; /* 页脚文本颜色 */
+    margin: 0; /* 移除默认的段落外边距 */
+}
+
+/* 使页脚始终在页面底部 */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1; /* 主内容区域占据剩余空间 */
+}
+
+footer {
+    margin-top: auto; /* 吸附到底部 */
+}

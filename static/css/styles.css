@@ -1,0 +1,160 @@
+/* static/css/styles.css */
+
+/* 背景样式 */
+body {
+  background: url("{% static 'img/background.jpg' %}") no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+/* 登录卡片样式 */
+.card {
+  width: 100%;
+  max-width: 450px; /* 默认最大宽度 */
+  margin: 0 auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* 提升阴影效果，使卡片更立体 */
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.9); /* 增加半透明背景，增强字体可读性 */
+}
+/* 在更大屏幕上调整宽度 */
+@media (min-width: 768px) {
+  .card {
+    max-width: 600px; /* 中等及以上屏幕下最大宽度设置为600px */
+  }
+}
+
+/* 在更小屏幕上调整宽度 */
+@media (max-width: 576px) {
+  .card {
+    max-width: 100%; /* 小屏幕上最大宽度为100% */
+  }
+}
+
+/* 标题样式 */
+.card-header {
+  text-align: center; /* 标题居中 */
+  font-size: 1.8rem; /* 增加标题字体大小 */
+  font-weight: bold; /* 增强标题的粗体效果 */
+  padding: 1.6rem;
+}
+
+/* 输入框和按钮 */
+.form-group {
+  margin-bottom: 2rem;              /* 增加表单组的间距，适当加大空白区域，使得表单更易读 */
+}
+
+.form-group label {
+  font-weight: bold;                /* 保持标签加粗 */
+  color: #4a4a4a;                   /* 设置标签颜色，使用更深的灰色，提高可读性 */
+  font-size: 1.4rem;                /* 增大标签字体大小，提升视觉层次感 */
+  margin-bottom: 0.5rem;            /* 在标签和输入框之间增加一些空隙 */
+  display: block;                   /* 确保标签独占一行，使得表单布局更加清晰 */
+}
+
+.form-control {
+  border-radius: 5px;             /* 设置圆角 */
+  border: 1px solid #ccc;         /* 设置灰色边框 */
+  font-size: 1rem;                /* 设置较小的字体大小（适应大多数布局） */
+  padding: 12px 20px;             /* 设置内边距，水平和垂直的内边距不同 */
+  width: 100%;                    /* 确保输入框占满父容器宽度 */
+  box-sizing: border-box;         /* 包括内边距在内计算宽度 */
+  background-color: #fff;         /* 设置背景颜色 */
+  color: #333;                    /* 设置字体颜色 */
+  transition: border-color 0.3s;  /* 为边框颜色添加过渡效果 */
+}
+
+.form-control:focus {
+  border-color: #66afe9;          /* 聚焦时改变边框颜色 */
+  outline: none;                  /* 去掉默认的聚焦时的外轮廓 */
+}
+
+.form-control.error {
+  border-color: red;              /* 当输入框错误时，设置红色边框 */
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  border-radius: 5px;
+  padding: 12px; /* 增加按钮的内边距 */
+  font-size: 1.2rem; /* 增加按钮字体大小 */
+  font-weight: bold;
+  width: 100%; /* 使按钮占满父容器宽度 */
+  box-sizing: border-box;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+/* 增加按钮的右侧间距 */
+.btn-block {
+  margin-bottom: 1rem; /* 提交按钮与“还没有账号？”之间的间距 */
+}
+
+/* 调整“还没有账号？注册”文字的大小 */
+.text-center {
+  position: absolute; /* 使用绝对定位 */
+  right: 0; /* 靠右对齐 */
+  bottom: 10px; /* 距离卡片底部10px */
+  font-size: 1.2rem; /* 设置字体大小 */
+  color: #333; /* 设置颜色 */
+}
+
+.text-center a {
+  font-size: 1.3rem; /* 设置链接的字体大小 */
+  color: #007bff; /* 设置链接颜色 */
+  text-decoration: none; /* 去掉链接的下划线 */
+}
+
+.text-center a:hover {
+  text-decoration: underline; /* 悬停时显示下划线 */
+}
+
+/* 错误提示样式 */
+.text-danger {
+  font-size: 0.875rem;
+}
+
+/* 边距优化 */
+.container {
+  max-width: 450px; /* 增大容器宽度 */
+  margin: 0 auto; /* 居中容器 */
+}
+
+/* 输入框和按钮的统一布局 */
+button[type="submit"] {
+  margin-top: 1rem; /* 提交按钮与输入框的间距 */
+}
+
+
+
+/* 卡片内容的内边距 */
+.card-body {
+  position: relative; /* 启用相对定位 */
+  padding: 2rem; /* 增加卡片内边距 */
+}
+
+/* 对齐表单元素 */
+.card-body form {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.card-body form .form-group input,
+.card-body form .form-group button {
+  margin-bottom: 10px; /* 为输入框和按钮增加底部间距 */
+}
+
+.card-body form .form-group button {
+  margin-top: 20px; /* 增加按钮顶部的间距 */
+}
