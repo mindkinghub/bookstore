@@ -1,1 +1,4 @@
 /frontend/
+# 忽略所有 Python 编译文件
+*.pyc
+__pycache__/
